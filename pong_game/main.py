@@ -1,6 +1,7 @@
 import pygame
 from paddle import Paddle
 from ball import Ball
+from ai_analytical import AI_analytical
 pygame.init()
 
 BLACK = (0,0,0)
@@ -50,12 +51,14 @@ while carryOn:
         paddleA.moveUp(5)
     if keys[pygame.K_s]:
         paddleA.moveDown(5)
-    if keys[pygame.K_UP]:
-        paddleB.moveUp(5)
-    if keys[pygame.K_DOWN]:
-        paddleB.moveDown(5)   
 
     # --- Game logic should go here
+    AI_move = AI_analytical.compute_move(paddleB.rect, ball.rect, ball.velocity)
+    if AI_move == 'up':
+        paddleB.moveUp(5)
+    if AI_move == 'down':
+        paddleB.moveDown(5)   
+
     all_sprites_list.update()
 
     if ball.rect.x>=690:
